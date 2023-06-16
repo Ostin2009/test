@@ -52,7 +52,7 @@ $config = [
         */
     ],
     'params' => $params,
-    'defaultRoute' => 'shoes',
+    'defaultRoute' => 'remnant',
 ];
 
 if (YII_ENV_DEV) {

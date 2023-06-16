@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use app\models\traits\ShoesTrait;
 
 /**
  * This is the model class for table "remnant".
@@ -14,6 +14,8 @@ use Yii;
  */
 class Remnant extends \yii\db\ActiveRecord
 {
+    use ShoesTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -38,10 +40,12 @@ class Remnant extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'Артикул',
             'shoes_id' => 'Shoes ID',
-            'size' => 'Size',
-            'count' => 'Count',
+            'size' => 'Размер',
+            'count' => 'Остаток',
+            'model' => 'Модель',
+            'color' => 'Цвет'
         ];
     }
 }
