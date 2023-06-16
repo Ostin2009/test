@@ -1,6 +1,6 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
+$params = require __DIR__ . '/local/params.php';
 $db = require __DIR__ . '/local/db.php';
 
 $config = [
@@ -52,6 +52,7 @@ $config = [
         */
     ],
     'params' => $params,
+    'defaultRoute' => 'shoes',
 ];
 
 if (YII_ENV_DEV) {
