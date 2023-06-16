@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Remnant;
 use app\models\forms\Remnant as RemnantSearch;
+use app\models\Shoes;
 use yii\db\Query;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
@@ -52,8 +53,9 @@ class RemnantController extends Controller
         $sizes = (new Query())->select('size')->from($query)->groupBy('size')->column();
         $sizes = array_combine($sizes, $sizes);
 
-        $colors = ['красный', 'зелёный'];
-//        $colors = (new Query())->select('shoes.color')->from($query)->groupBy('shoes.color')->column();
+        $shoesIds = (new Query())->select('shoes_id')->from($query)->groupBy('shoes_id')->column();
+
+        $colors = Shoes::find()->select('color')->where(['IN', 'id', $shoesIds])->groupBy('color')->column();
         $colors = array_combine($colors, $colors);
 
         return $this->render('index', compact('searchModel', 'dataProvider', 'sizes', 'colors'));
