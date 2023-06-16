@@ -4,8 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\forms\Remnant $model */
+/** @var app\models\forms\Remnant $searchModel */
 /** @var yii\widgets\ActiveForm $form */
+/** @var array $colors */
+/** @var array $sizes */
 ?>
 
 <div class="remnant-search">
@@ -15,18 +17,29 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'model')
-        ->dropDownList($model->getRotatorAutoFormFilter(), [
+    <?= $form->field($searchModel, 'model')
+        ->dropDownList([
+            'Клёвые'=>'Клёвые',
+            'Модные'=>'Модные',
+            'Странные'=>'Странные',
+            'Весёлые'=>'Весёлые',
+            'Понтовые'=>'Понтовые'
+        ], [
             'prompt' => '',
         ]) ?>
 
-    <?= $form->field($model, 'color') ?>
+    <?= $form->field($searchModel, 'color')
+        ->dropDownList($colors, [
+            'prompt' => '',
+        ]) ?>
 
-    <?= $form->field($model, 'size') ?>
+    <?= $form->field($searchModel, 'size')
+        ->dropDownList($sizes, [
+            'prompt' => '',
+        ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

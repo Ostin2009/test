@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use app\models\Remnant;
 use app\models\forms\Remnant as RemnantSearch;
+use yii\db\Query;
 use yii\web\Controller;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -38,13 +40,23 @@ class RemnantController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RemnantSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $params = $this->request->queryParams;
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        $searchModel = new RemnantSearch();
+        $query = $searchModel->search($params);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
         ]);
+
+        $sizes = (new Query())->select('size')->from($query)->groupBy('size')->column();
+        $sizes = array_combine($sizes, $sizes);
+
+        $colors = ['красный', 'зелёный'];
+//        $colors = (new Query())->select('shoes.color')->from($query)->groupBy('shoes.color')->column();
+        $colors = array_combine($colors, $colors);
+
+        return $this->render('index', compact('searchModel', 'dataProvider', 'sizes', 'colors'));
     }
 
     /**
