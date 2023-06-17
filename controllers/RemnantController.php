@@ -69,9 +69,47 @@ class RemnantController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        $params = $this->request->queryParams;
+
+        $model = $this->findModel($id);
+
+        $searchModel = new RemnantSearch(['model' => $model->shoes->model]);
+        $query = $searchModel->search($params);
+
+        $queryModel = (clone $query)->one();
+
+        if (!empty($params["Remnant"])) {
+            $model = $queryModel;
+        }
+
+        if (empty($model)) {
+            throw new NotFoundHttpException('Такого товара нет.');
+        }
+
+        $searchModel->size = $model->size;
+        $searchModel->color = $model->shoes->color;
+
+        $sizesSearch = new RemnantSearch([
+            'model' => $model->shoes->model,
+            'color' => $searchModel->color
         ]);
+        $sizesQuery = $sizesSearch->search();
+
+        $sizes = (new Query())->select('size')->from($sizesQuery)->groupBy('size')->column();
+        $sizes = array_combine($sizes, $sizes);
+
+        $colorsSearch = new RemnantSearch([
+            'model' => $model->shoes->model,
+            'size' => $searchModel->size
+        ]);
+        $colorsQuery = $colorsSearch->search();
+
+        $shoesIds = (new Query())->select('shoes_id')->from($colorsQuery)->groupBy('shoes_id');
+
+        $colors = Shoes::find()->select('color')->where(['IN', 'id', $shoesIds])->groupBy('color')->column();
+        $colors = array_combine($colors, $colors);
+
+        return $this->render('view', compact('model', 'searchModel', 'sizes', 'colors'));
     }
     /**
      * Finds the Remnant model based on its primary key value.

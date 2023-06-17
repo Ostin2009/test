@@ -17,31 +17,31 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($searchModel, 'model')
-        ->dropDownList([
-            'Клёвые'=>'Клёвые',
-            'Модные'=>'Модные',
-            'Странные'=>'Странные',
-            'Весёлые'=>'Весёлые',
-            'Понтовые'=>'Понтовые'
-        ], [
-            'prompt' => '',
-        ]) ?>
+    <div class="row">
+        <div class="col-md-3">
+            <?= $form->field($searchModel, 'model')
+                ->dropDownList([
+                    'Клёвые' => 'Клёвые',
+                    'Модные' => 'Модные',
+                    'Странные' => 'Странные',
+                    'Весёлые' => 'Весёлые',
+                    'Понтовые' => 'Понтовые',
+                ], [
+                    'onchange'=>'this.form.submit()',
+                    'prompt' => 'Все модели',
+                    ]) ?>
+        </div>
 
-    <?= $form->field($searchModel, 'color')
-        ->dropDownList($colors, [
-            'prompt' => '',
-        ]) ?>
+        <div class="col-md-3">
+            <?= $form->field($searchModel, 'color')
+                ->dropDownList($colors, ['onchange'=>'this.form.submit()', 'prompt' => 'Все цвета',]) ?>
+        </div>
 
-    <?= $form->field($searchModel, 'size')
-        ->dropDownList($sizes, [
-            'prompt' => '',
-        ]) ?>
+        <div class="col-md-3">
+            <?= $form->field($searchModel, 'size')
+                ->dropDownList($sizes, ['onchange'=>'this.form.submit()', 'prompt' => 'Все размеры',]) ?>
+        </div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?php ActiveForm::end(); ?>
+
     </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div>

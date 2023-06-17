@@ -37,11 +37,11 @@ class Remnant extends RemnantModel
     /**
      * Creates data provider instance with search query applied
      *
-     * @param array $params
+     * @param null|array $params
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params = null)
     {
         $query = RemnantModel::find()
             ->joinWith(Shoes::tableName())
