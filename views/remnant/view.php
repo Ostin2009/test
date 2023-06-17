@@ -11,7 +11,6 @@ use yii\web\YiiAsset;
 /** @var array $sizes */
 
 $this->title = $model->shoes->model;
-$this->params['breadcrumbs'][] = ['label' => 'Remnants', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 YiiAsset::register($this);
 

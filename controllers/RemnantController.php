@@ -48,12 +48,15 @@ class RemnantController extends Controller
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 15,
+            ],
         ]);
 
         $sizes = (new Query())->select('size')->from($query)->groupBy('size')->column();
         $sizes = array_combine($sizes, $sizes);
 
-        $shoesIds = (new Query())->select('shoes_id')->from($query)->groupBy('shoes_id')->column();
+        $shoesIds = (new Query())->select('shoes_id')->from($query)->groupBy('shoes_id');
 
         $colors = Shoes::find()->select('color')->where(['IN', 'id', $shoesIds])->groupBy('color')->column();
         $colors = array_combine($colors, $colors);

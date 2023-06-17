@@ -13,7 +13,6 @@ use yii\widgets\ListView;
 /** @var array $sizes */
 
 $this->title = 'Категория ботинки';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="remnant-index">
 
@@ -25,7 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model->id), ['view', 'id' => $model->id]);
+            return
+                Html::a(
+                    Html::encode($model->shoes->model  . ', цвет: ' . $model->shoes->color . ', размер: ' . $model->size),
+                    ['view', 'id' => $model->id]
+                );
         },
     ]) ?>
 
